@@ -1,15 +1,15 @@
 class BulkDiscountsController < ApplicationController
   # before_action :find_invoice_and_merchant, only: [:show, :update]
   before_action :find_merchant, only: [:index]
+  before_action :find_bulk_discount, only: [:show]
 
   def index
     @bulk_discounts = @merchant.bulk_discounts
   end
 
-  # def show
-  #   @customer = @invoice.customer
-  #   @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
-  # end
+  def show
+    @bulk_discount
+  end
 
   # def update
   #   @invoice.update(invoice_params)
@@ -19,6 +19,10 @@ class BulkDiscountsController < ApplicationController
   private
   def find_merchant
     @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def find_bulk_discount
+    @bulk_discount = BulkDiscount.find(params[:id])
   end
 
 end

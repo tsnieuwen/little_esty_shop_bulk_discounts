@@ -7,7 +7,7 @@ describe "merchant bulk discounts index" do
 
     @bulk_discount1 = BulkDiscount.create!(percentage: 0.2, minimum: 16, merchant_id: @merchant1.id)
     @bulk_discount2 = BulkDiscount.create!(percentage: 0.1, minimum: 10, merchant_id: @merchant1.id)
-    @bulk_discount3 = BulkDiscount.create!(percentage: 0.05, minimum: 5, merchant_id: @merchant2.id)
+    @bulk_discount3 = BulkDiscount.create!(percentage: 0.06, minimum: 6, merchant_id: @merchant2.id)
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
@@ -65,9 +65,9 @@ describe "merchant bulk discounts index" do
     expect(page).to have_content(@bulk_discount2.id)
     expect(page).to have_content(@bulk_discount2.percentage*100)
     expect(page).to have_content(@bulk_discount2.minimum)
-    expect(page).to_not have_content(@bulk_discount3.id)
-    expect(page).to_not have_content(@bulk_discount3.percentage*100)
-    expect(page).to_not have_content(@bulk_discount3.minimum)
+    expect(page).to_not have_content("Bulk Discount ##{@bulk_discount3.id}")
+    expect(page).to_not have_content("#{@bulk_discount3.percentage*100}%")
+    expect(page).to_not have_content("off #{@bulk_discount3.minimum}")
   end
 
   it "has links to each bulk discount's show page" do
@@ -77,8 +77,8 @@ describe "merchant bulk discounts index" do
     expect(page).to have_link("Bulk Discount ##{@bulk_discount2.id}")
     expect(page).to_not have_link("Bulk Discount ##{@bulk_discount3.id}")
 
-    # click_link("Bulk Discount ##{@bulk_discount1.id}")
-    # expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+    click_link("Bulk Discount ##{@bulk_discount1.id}")
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
 
   end
 
