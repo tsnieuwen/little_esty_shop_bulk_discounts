@@ -23,6 +23,12 @@ FactoryBot.define do
     merchant
   end
 
+  factory :bulk_discount do
+    percentage {[0.1, 0.2, 0.3, 0.4, 0.5].sample}
+    minimum {[0..20].sample}
+    merchant
+  end
+
   factory :transaction do
     result {[0,1].sample}
     credit_card_number {Faker::Finance.credit_card}

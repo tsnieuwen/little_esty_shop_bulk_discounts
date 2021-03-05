@@ -31,6 +31,7 @@ task :import, [:invoices] => :environment do
       status = 2
     end
     Invoice.create!({ id:          row[0],
+                      customer_id: row[1],
                       status:      status,
                       created_at:  row[3],
                       updated_at:  row[4] })
