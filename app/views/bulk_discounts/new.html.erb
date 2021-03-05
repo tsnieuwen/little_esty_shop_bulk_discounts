@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <p class="navbar-text"><%= @merchant.name %></p>
+  <ul class="nav navbar-nav">
+    <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
+    <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
+    <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
+      <%= link_to 'My Bulk Discounts', merchant_bulk_discounts_path(@merchant), style: 'pull-right' %>
+  </ul>
+</nav>
+</div>
+
+<%= form_with url: merchant_bulk_discounts_path(@merchant), method: :post, local: true do |form| %>
+  <%= form.label(:percentage, 'Percentage:') %>
+  <%= form.text_field :percentage , required: true%><br>
+  <%= form.label(:minimum, 'Minimum # of Items:') %>
+  <%= form.text_field :minimum , required: true%><br>
+  <%= form.hidden_field(:merchant_id, value: @merchant.id)%><br>
+  <%= form.submit('Submit') %>
+<% end %>
