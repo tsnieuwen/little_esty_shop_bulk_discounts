@@ -11,6 +11,9 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount
   end
 
+  def new
+  end 
+
   # def update
   #   @invoice.update(invoice_params)
   #   redirect_to merchant_invoice_path(@merchant, @invoice)
