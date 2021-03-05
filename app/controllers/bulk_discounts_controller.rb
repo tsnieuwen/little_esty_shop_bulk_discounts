@@ -22,6 +22,11 @@ class BulkDiscountsController < ApplicationController
     redirect_to "/merchant/#{params[:merchant_id]}/bulk_discounts"
   end
 
+  def destroy
+    BulkDiscount.destroy(params[:id])
+    redirect_to "/merchant/#{params[:merchant_id]}/bulk_discounts"
+  end
+
   # def update
   #   @invoice.update(invoice_params)
   #   redirect_to merchant_invoice_path(@merchant, @invoice)
