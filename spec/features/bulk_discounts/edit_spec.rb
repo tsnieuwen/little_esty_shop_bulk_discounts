@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "merchant bulk discounts index" do
+describe "merchant bulk discount edit page" do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
@@ -56,18 +56,23 @@ describe "merchant bulk discounts index" do
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
   end
 
-  it "can see all merchant's bulk discounts ids, percentages, and minimum number of items" do
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+  it "can see forms to enter new parameters for the bulk discount" do
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
 
-    expect(page).to have_content("Discount: #{@bulk_discount1.percentage*100}% off")
-    expect(page).to have_content("Minimum number of items: #{@bulk_discount1.minimum}")
+    expect(page).to have_content("Percentage:")
+    expect(page).to have_content("Minimum # of Items:")
+    expect(page).to have_button("Save")
   end
 
-  it "has a link that redirects to the edit page for that bulk discount" do
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+  it "redirects to the bulk discount page after submitting new parameters" do
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
 
-    expect(page).to have_link("Update Bulk Discount ##{@bulk_discount1.id}")
-    click_link("Update Bulk Discount ##{@bulk_discount1.id}")
-    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+    fill_in :percentage, with: 50
+    fill_in :minimum, with: 10
+    click_button("Save")
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+    expect(page).to have_content("Discount: 50.0% off")
+    expect(page).to have_content("Minimum number of items: 10")
   end
+
 end

@@ -12,12 +12,17 @@
 
 <body>
   <div class="row">
-    <p class='col-12'>Bulk Discount #<%= @bulk_discount.id %> </p>
+    <p class='col-12'>Edit Bulk Discount #<%= @bulk_discount.id %> </p>
   </div>
 
-  <%= link_to "Update Bulk Discount ##{@bulk_discount.id}", edit_merchant_bulk_discount_path(@merchant, @bulk_discount), style: 'pull-right' %>
+  <%= form_with url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch, local: true do |form| %>
+    <%= form.label(:percentage, 'Percentage:') %>
+    <%= form.text_field(:percentage, value: (@bulk_discount.percentage * 100), required: true)%><br>
 
-  <p> Discount: <%= @bulk_discount.percentage*100 %>% off</p
-  <p> Minimum number of items: <%= @bulk_discount.minimum %></p>
+    <%= form.label(:minimum, 'Minimum # of Items:') %>
+    <%= form.text_field :minimum, value: @bulk_discount.minimum, required: true%><br>
+
+    <%= form.submit('Save') %>
+  <% end %>
 
 </body>
