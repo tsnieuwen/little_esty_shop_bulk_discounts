@@ -9,15 +9,3 @@
     </ul>
   </nav>
 </div>
-
-<body>
-  <div class="row">
-    <p class='col-12'>Bulk Discount #<%= @bulk_discount.id %> </p>
-  </div>
-
-  <%= link_to "Update Bulk Discount ##{@bulk_discount.id}", edit_merchant_bulk_discount_path(@merchant, @bulk_discount), style: 'pull-right' %>
-
-  <p> Discount: <%= @bulk_discount.percentage*100 %>% off</p
-  <p> Minimum number of items: <%= @bulk_discount.minimum %></p>
-
-</body>

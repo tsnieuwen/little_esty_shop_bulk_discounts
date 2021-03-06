@@ -61,5 +61,13 @@ describe "merchant bulk discounts index" do
 
     expect(page).to have_content("Discount: #{@bulk_discount1.percentage*100}% off")
     expect(page).to have_content("Minimum number of items: #{@bulk_discount1.minimum}")
-  end 
+  end
+
+  it "has a link that redirects to the edit page for that bulk discount" do
+    visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+
+    expect(page).to have_link("Update Bulk Discount ##{@bulk_discount1.id}")
+    click_link("Update Bulk Discount ##{@bulk_discount1.id}")
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+  end
 end
