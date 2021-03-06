@@ -9,3 +9,20 @@
     </ul>
   </nav>
 </div>
+
+<body>
+  <div class="row">
+    <p class='col-12'>Edit Bulk Discount #<%= @bulk_discount.id %> </p>
+  </div>
+
+  <%= form_with url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch, local: true do |form| %>
+    <%= form.label(:percentage, 'Percentage:') %>
+    <%= form.text_field(:percentage, value: (@bulk_discount.percentage * 100), required: true)%><br>
+
+    <%= form.label(:minimum, 'Minimum # of Items:') %>
+    <%= form.text_field :minimum, value: @bulk_discount.minimum, required: true%><br>
+
+    <%= form.submit('Save') %>
+  <% end %>
+
+</body>

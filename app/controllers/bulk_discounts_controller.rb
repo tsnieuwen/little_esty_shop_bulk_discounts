@@ -1,7 +1,7 @@
 class BulkDiscountsController < ApplicationController
   # before_action :find_invoice_and_merchant, only: [:show, :update]
-  before_action :find_merchant, only: [:index, :new, :create, :show, :edit]
-  before_action :find_bulk_discount, only: [:show, :edit]
+  before_action :find_merchant, only: [:index, :new, :create, :show, :edit, :update]
+  before_action :find_bulk_discount, only: [:show, :edit, :update]
 
   def index
     @bulk_discounts = @merchant.bulk_discounts
@@ -17,6 +17,11 @@ class BulkDiscountsController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    @bulk_discount.update(percentage: (params[:percentage].to_f/100), minimum: params[:minimum])
+    redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
   end
 
   def create
