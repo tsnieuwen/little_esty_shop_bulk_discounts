@@ -11,6 +11,15 @@
 </div>
 
 <body>
+
+  <div class="row">
+    <p class='col-12'>Upcoming Holidays</p>
+  </div>
+
+  <ol><% @holidays.each do |holiday| %>
+    <li><%= holiday.name %>, <%= holiday.date.strftime("%B %d") %> <br>
+  <% end  %></ol>
+
   <div class="row">
     <p class='col-12'>My Bulk Discounts</p>
   </div>

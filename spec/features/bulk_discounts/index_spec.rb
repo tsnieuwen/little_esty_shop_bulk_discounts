@@ -104,4 +104,12 @@ describe "merchant bulk discounts index" do
     expect(page).to have_content("Bulk Discount ##{@bulk_discount2.id} #{@bulk_discount2.percentage*100}% off #{@bulk_discount2.minimum} items or more")
   end
 
+  it "renders the next three holidays and their date" do
+    visit merchant_bulk_discounts_path(@merchant1)
+
+    expect(page).to have_content("Memorial Day, May 31")
+    expect(page).to have_content("Independence Day, July 05")
+    expect(page).to have_content("Labour Day, September 06")
+  end
+
 end
