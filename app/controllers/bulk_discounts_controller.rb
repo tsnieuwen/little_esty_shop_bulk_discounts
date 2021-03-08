@@ -4,7 +4,7 @@ class BulkDiscountsController < ApplicationController
   before_action :find_bulk_discount, only: [:show, :edit, :update]
 
   def index
-    @bulk_discounts = @merchant.bulk_discounts
+    @bulk_discounts = @merchant.bulk_discounts.order(minimum: :desc)
     @holidays ||= HolidayService.upcoming_holidays
   end
 
