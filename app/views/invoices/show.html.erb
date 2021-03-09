@@ -46,8 +46,8 @@
           <tr class="tr">
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
-            <% if i.find_best_discount(i.quantity).first != nil %>
-              <td style="text-align:center"><%= link_to "Discount ##{i.find_best_discount(i.quantity).first}", "/merchant/#{@merchant.id}/bulk_discounts/#{i.find_best_discount(i.quantity).first}"%></td>
+            <% if i.find_best_discount != nil %>
+              <td style="text-align:center"><%= link_to "Discount ##{i.find_best_discount}", "/merchant/#{@merchant.id}/bulk_discounts/#{i.find_best_discount}"%></td>
             <% else %>
               <td style="text-align:center">No Discount</td>
             <% end %>

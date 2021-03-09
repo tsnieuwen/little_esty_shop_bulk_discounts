@@ -17,12 +17,21 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def find_best_discount(x)
+  def find_best_discount
     bulk_discounts
-    .where("#{x} >= minimum")
+    .where("#{self.quantity} >= minimum")
     .order(percentage: :desc)
     .limit(1)
     .pluck(:id)
+    .first
   end
+
+  # def find_best_discount(x)
+  #   bulk_discounts
+  #   .where("#{x} >= minimum")
+  #   .order(percentage: :desc)
+  #   .limit(1)
+  #   .pluck(:id)
+  # end
 
 end
