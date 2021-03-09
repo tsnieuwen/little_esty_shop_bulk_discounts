@@ -22,7 +22,9 @@
     </section>
       <% end %>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
-  <p>Total Revenue: $<%= @invoice.total_revenue %>
+  <p>Pre Discounts: $<%= @invoice.total_revenue %>
+  <p>Savings: $<%= @invoice.total_savings %>
+  <p>Total: $<%= @invoice.total_revenue - @invoice.total_savings %>
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
