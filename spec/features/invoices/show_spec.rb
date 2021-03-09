@@ -5,6 +5,10 @@ RSpec.describe 'invoices show' do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
 
+    @bulk_discount1 = BulkDiscount.create!(percentage: 0.2, minimum: 16, merchant_id: @merchant1.id)
+    @bulk_discount2 = BulkDiscount.create!(percentage: 0.1, minimum: 10, merchant_id: @merchant1.id)
+    @bulk_discount3 = BulkDiscount.create!(percentage: 0.06, minimum: 6, merchant_id: @merchant2.id)
+
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
     @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
@@ -83,6 +87,18 @@ RSpec.describe 'invoices show' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content(@invoice_1.total_revenue)
+  end
+
+  it "shows the total discounts for this invoice" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content(@invoice_1.total_savings)
+  end
+
+  it "shows the total for the invoice with discounts factored in" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("#{@invoice_1.total_revenue - @invoice_1.total_savings}")
   end
 
   it "shows a select field to update the invoice status" do

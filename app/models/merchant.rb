@@ -56,4 +56,7 @@ class Merchant < ApplicationRecord
     .created_at
     .to_date
   end
+
+  def savings
+  end
 end
