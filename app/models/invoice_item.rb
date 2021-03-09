@@ -16,4 +16,13 @@ class InvoiceItem < ApplicationRecord
     invoice_ids = InvoiceItem.where("status = 0 OR status = 1").pluck(:invoice_id)
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
+
+  def find_best_discount(x)
+    bulk_discounts
+    .where("#{x} >= minimum")
+    .order(percentage: :desc)
+    .limit(1)
+    .pluck(:id)
+  end
+
 end

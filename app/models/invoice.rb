@@ -28,20 +28,24 @@ class Invoice < ApplicationRecord
   def save_money
     invoice_items.joins(:bulk_discounts)
     .where('invoice_items.quantity >= bulk_discounts.minimum')
-    .select("invoice_items.item_id, MAX(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage)")
     .group("invoice_items.item_id")
+    .select("invoice_items.item_id, MAX(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage)")
   end
+
+  # def save_money
+  #   invoice_items.joins(:bulk_discounts)
+  #   .where('invoice_items.quantity >= bulk_discounts.minimum')
+  #   .group("invoice_items.item_id, bulk_discounts.id")
+  #   .select("invoice_items.item_id, bulk_discounts.id, MAX(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage)")
+  #
+  #
+  # end
 
   def total_savings
     save_money.sum(&:max)
   end
 
-  def find_discount
-    invoice_items.joins(:bulk_discounts)
-    .where('invoice_items.quantity >= bulk_discounts.minimum')
-    .select("invoice_items.item_id, MAX(bulk_discounts.percentage)")
-    .group("invoice_items.item_id")
-  end
+
   # def save_money
   #   # Invoice.joins(:invoice_items, :items, :bulk_discounts)
   #   invoice_items.joins(:bulk_discounts)
