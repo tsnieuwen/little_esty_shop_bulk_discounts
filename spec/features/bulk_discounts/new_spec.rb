@@ -26,6 +26,36 @@ describe "merchant bulk discounts new" do
     click_button("Submit")
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
     expect(page).to have_content("50.0%")
-    expect(page).to have_content("10 items or more")
+    expect(page).to have_content("10 item or more")
+  end
+
+  it "renders a message prompting correct input if percentage is outside 0 to 100" do
+    visit new_merchant_bulk_discount_path(@merchant1)
+
+    fill_in :percentage, with: 101
+    fill_in :minimum, with: 10
+    click_button("Submit")
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("Discount not created. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items")
+  end
+
+  it "renders a message prompting correct input if threshold is not a whole number greater than 0" do
+    visit new_merchant_bulk_discount_path(@merchant1)
+
+    fill_in :percentage, with: 98
+    fill_in :minimum, with: "tacos"
+    click_button("Submit")
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("Discount not created. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items")
+  end
+
+  it "renders a message prompting correct input if threshold is not a whole number greater than 0" do
+    visit new_merchant_bulk_discount_path(@merchant1)
+
+    fill_in :percentage, with: 98
+    fill_in :minimum, with: 0
+    click_button("Submit")
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("Discount not created. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items")
   end
 end

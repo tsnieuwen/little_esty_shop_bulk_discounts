@@ -24,7 +24,7 @@ class BulkDiscountsController < ApplicationController
     if @bulk_discount.update(percentage: (params[:percentage].to_f/100), minimum: params[:minimum])
       redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
     else
-      flash.now[:input] = "Discount not updated. Please enter a percentage from 0 - 100, and a whole number for the minimum number of items"
+      flash.now[:input] = "Discount not updated. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items"
       render :edit
     end
   end
@@ -41,7 +41,7 @@ class BulkDiscountsController < ApplicationController
     if discount.save
       redirect_to "/merchant/#{params[:merchant_id]}/bulk_discounts"
     else
-      flash.now[:input] = "Discount not created. Please enter a percentage from 0 - 100, and a whole number for the minimum number of items"
+      flash.now[:input] = "Discount not created. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items"
       render :new
     end
   end
