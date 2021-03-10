@@ -91,12 +91,12 @@ describe "merchant bulk discounts index" do
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
   end
 
-  it "each bulk discount has a link to delete it" do
+  it "each bulk discount has a button to delete it" do
     visit merchant_bulk_discounts_path(@merchant1)
 
-    expect(page).to have_link("Delete Bulk Discount ##{@bulk_discount1.id}")
-    expect(page).to have_link("Delete Bulk Discount ##{@bulk_discount2.id}")
-    expect(page).to_not have_link("Delete Bulk Discount ##{@bulk_discount3.id}")
+    expect(page).to have_button("Delete Bulk Discount ##{@bulk_discount1.id}")
+    expect(page).to have_button("Delete Bulk Discount ##{@bulk_discount2.id}")
+    expect(page).to_not have_button("Delete Bulk Discount ##{@bulk_discount3.id}")
 
     click_link("Delete Bulk Discount ##{@bulk_discount1.id}")
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
