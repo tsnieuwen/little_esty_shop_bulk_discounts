@@ -26,7 +26,7 @@ describe "merchant bulk discounts new" do
     click_button("Submit")
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
     expect(page).to have_content("50.0%")
-    expect(page).to have_content("10 item or more")
+    expect(page).to have_content("10 items or more")
   end
 
   it "renders a message prompting correct input if percentage is outside 0 to 100" do
