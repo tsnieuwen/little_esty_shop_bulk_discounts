@@ -21,16 +21,37 @@ class BulkDiscountsController < ApplicationController
   end
 
   def update
-    @bulk_discount.update(percentage: (params[:percentage].to_f/100), minimum: params[:minimum])
-    redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+    if @bulk_discount.update(percentage: (params[:percentage].to_f/100), minimum: params[:minimum])
+      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+    else
+      flash.now[:input] = "Discount not updated. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items"
+      render :edit
+    end
   end
 
+  # def update
+  #   @bulk_discount.update(percentage: (params[:percentage].to_f/100), minimum: params[:minimum])
+  #   redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+  # end
+
   def create
-    BulkDiscount.create!(percentage: (params[:percentage].to_f/100),
+    discount = BulkDiscount.new(percentage: (params[:percentage].to_f/100),
                         minimum: params[:minimum],
                         merchant_id: params[:merchant_id])
-    redirect_to "/merchant/#{params[:merchant_id]}/bulk_discounts"
+    if discount.save
+      redirect_to "/merchant/#{params[:merchant_id]}/bulk_discounts"
+    else
+      flash.now[:input] = "Discount not created. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items"
+      render :new
+    end
   end
+
+  # def create
+  #   BulkDiscount.create!(percentage: (params[:percentage].to_f/100),
+  #                       minimum: params[:minimum],
+  #                       merchant_id: params[:merchant_id])
+  #   redirect_to "/merchant/#{params[:merchant_id]}/bulk_discounts"
+  # end
 
   def destroy
     BulkDiscount.destroy(params[:id])

@@ -76,4 +76,34 @@ describe "merchant bulk discount edit page" do
     expect(page).to have_content("Minimum number of items: 10")
   end
 
+  it "renders a message prompting correct input if percentage is outside 0 to 100" do
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+
+    fill_in :percentage, with: 101
+    fill_in :minimum, with: 10
+    click_button("Save")
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+    expect(page).to have_content("Discount not updated. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items")
+  end
+
+  it "renders a message prompting correct input if threshold is not a whole number greater than 0" do
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+
+    fill_in :percentage, with: 98
+    fill_in :minimum, with: "tacos"
+    click_button("Save")
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+    expect(page).to have_content("Discount not updated. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items")
+  end
+
+  it "renders a message prompting correct input if threshold is not a whole number greater than 0" do
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+
+    fill_in :percentage, with: 98
+    fill_in :minimum, with: 0
+    click_button("Save")
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+    expect(page).to have_content("Discount not updated. Please enter a percentage from 0 - 100, and a whole number greater than or equal to one for the minimum number of items")
+  end
+
 end
