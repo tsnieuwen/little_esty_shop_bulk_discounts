@@ -33,12 +33,15 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'bootstrap'
+gem 'faraday'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+gem 'hirb', '~> 0.7.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -51,7 +54,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers'
   gem 'simplecov'
-  gem 'faraday'
   gem 'json'
 end
 
