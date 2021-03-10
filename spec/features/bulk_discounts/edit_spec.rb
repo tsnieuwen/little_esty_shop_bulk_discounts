@@ -62,6 +62,7 @@ describe "merchant bulk discount edit page" do
     expect(page).to have_content("Percentage:")
     expect(page).to have_content("Minimum # of Items:")
     expect(page).to have_button("Save")
+
   end
 
   it "redirects to the bulk discount page after submitting new parameters" do

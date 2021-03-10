@@ -56,7 +56,7 @@ describe "merchant bulk discounts index" do
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
   end
 
-  it "can see all merchant's bulk discounts ids, percentages, and minimum number of items" do
+  it "can see all the bulk discount's percentage and item quantity threshold" do
     visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
 
     expect(page).to have_content("Discount: #{@bulk_discount1.percentage*100}% off")
