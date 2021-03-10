@@ -110,6 +110,10 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content("cancelled")
       expect(page).to_not have_content("in progress")
      end
+
+     expect(page).to have_link("Discount ##{@ii_1.find_best_discount}")
+     expect(page).to have_link("Discount ##{@ii_11.find_best_discount}")
+     # click_link("Discount ##{@ii_1.find_best_discount}")
   end
 
 end

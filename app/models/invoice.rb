@@ -25,6 +25,12 @@ class Invoice < ApplicationRecord
   #   .order("bulk_discounts.percentage desc")
   # end
 
+  # def save_money
+  #   invoice_items.joins(:bulk_discounts)
+  #   .where('invoice_items.quantity >= bulk_discounts.minimum')
+  #   .select("invoice_items.item_id, bulk_discounts.percentage")
+  # end
+
   def save_money
     invoice_items.joins(:bulk_discounts)
     .where('invoice_items.quantity >= bulk_discounts.minimum')
